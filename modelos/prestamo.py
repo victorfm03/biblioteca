@@ -12,5 +12,5 @@ class Prestamo:
         return self.fecha_devolucion is None
 
     def __str__(self) -> str:
-        return f"usuario: {self.usuario.nombre} {self.usuario.apellidos}\nLibro: {self.libro.titulo} fecha de prestamo: {self.fecha_prestamo} estado: {self.activo}"
+        return f"usuario: {self.usuario.nombre} {self.usuario.apellidos}\nLibro: {self.libro.titulo}\nfecha de prestamo: {self.fecha_prestamo}\nestado: {self.activo}"
 

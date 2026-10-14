@@ -8,8 +8,12 @@ class Libro:
         self.disponible = disponible
 
     def __str__(self) -> str:
-        estado = "Disponible" if self.disponible else "Prestado"
-        return f"Código: {self.isbn}\nTítulo: {self.titulo}\nAutor: {self.autor}\nAño: {self.anio}\nGénero: {self.genero}\nEstado: {estado}"
+        return f"Código: {self.isbn}\nTítulo: {self.titulo}\nAutor: {self.autor}\nAño: {self.anio}\nGénero: {self.genero}\nEstado: {self.isDisponible}"
 
+    @property
+    def isDisponible(self)-> bool:
+        estado = "Disponible" if self.disponible else "Prestado"
+        return estado
+    
     def __eq__(self,valor):
         return self.isbn ==valor.isbn

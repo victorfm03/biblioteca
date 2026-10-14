@@ -2,6 +2,7 @@ from modelos.libro import Libro
 from modelos.prestamo import Prestamo
 from modelos.usuario import Usuario
 from servicios.biblioteca import Biblioteca
+from datetime import date
 
 def menu():
     print()
@@ -41,6 +42,68 @@ def registrar_usuario(biblioteca):
     usuario= Usuario(id,nombre,apellidos,email)
     biblioteca.registrar_usuario(usuario)
 
+def buscar_libro(biblioteca):
+    print("1. Buscar por ISBN")
+    print("2. Buscar por Titulo")
+    print("3. Buscar por Autor")
+    
+    buscar=input("elige el criterio de busqueda: ")
+
+
+    libroBuscado=None
+    if buscar=="1" or buscar=="2" or buscar=="3":
+        valor=input("Di el libro a buscar: ")
+        """for libro in biblioteca.libros:
+            if buscar=="1" and libro.isbn==valor:
+                libroBuscado=libro
+            elif buscar=="2" and libro.titulo==valor:
+                libroBuscado=libro
+            elif buscar=="3" and libro.autor==valor:
+                libroBuscado=libro"""
+
+        libroBuscado=[libro.__str__() for libro in biblioteca.libros if buscar =="1" and libro.isbn==valor or buscar=="2" and libro.titulo==valor or buscar=="3" and libro.autor==valor]
+        libroBuscado=libroBuscado[0]
+    else:
+        print("opcion no valida")
+
+    return libroBuscado
+
+
+def listar_libros(biblioteca):
+    for libro in biblioteca.libros:
+        print(f"{libro}\n")
+
+def realizar_prestamo(biblioteca):
+    
+    idUsuario= int(input("id del usuario que hara el prestamo: "))
+    isbnLibro= input("di el isbn del prestamo: ")
+
+    usuario=biblioteca.buscar_usuario_por_id(idUsuario)
+    libro= biblioteca.buscar_libro_por_isbn(isbnLibro)
+
+    prestamo=Prestamo(usuario,libro)
+    biblioteca.registrarPrestamo(prestamo)
+    
+def registrarDevolucion(biblioteca):
+    isbnLibro= input("di el isbn del libro a devolver: ")
+    libro= biblioteca.buscar_libro_por_isbn(isbnLibro)
+
+    if libro is None:
+        print("No existe ese libro")
+        return
+
+    if libro.disponible:
+        print("Ese libro ya está disponible")
+        return
+    
+    for prestamo in biblioteca.prestamos:
+        if prestamo.libro== libro and prestamo.activo:
+            prestamo.fecha_devolucion=date.today()
+    
+    libro.disponible=True
+    print(f"Código del libro: {libro.isbn}")
+    print("Libro devuelto correctamente.")
+    
 def main():
 
     biblioteca = Biblioteca()
@@ -51,15 +114,15 @@ def main():
         if opcion == "1":
             registrar_libro(biblioteca)
         elif opcion == "2":
-            pass
+            registrar_usuario(biblioteca)
         elif opcion == "3":
-            pass
+            print(buscar_libro(biblioteca))
         elif opcion == "4":
-            pass
+            listar_libros(biblioteca)
         elif opcion == "5":
-            pass
+            realizar_prestamo(biblioteca)
         elif opcion == "6":
-            pass
+            registrarDevolucion(biblioteca)
         elif opcion == "7":
             pass
         elif opcion == "8":
