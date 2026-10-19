@@ -10,6 +10,16 @@ class Prestamo:
     @property
     def activo(self):
         return self.fecha_devolucion is None
+    
+
+    def to_dict(self):
+        return {
+            "usuario":self.usuario.__dict__,
+            "libro":self.libro.__dict__,
+            "fecha_prestamo":self.fecha_prestamo.isoformat(),
+            "activo":self.activo,
+            "fecha_devolucion":self.fecha_devolucion.isoformat() if self.fecha_devolucion is not None else None
+        }
 
     def __str__(self) -> str:
         return f"usuario: {self.usuario.nombre} {self.usuario.apellidos}\nLibro: {self.libro.titulo}\nfecha de prestamo: {self.fecha_prestamo}\nestado: {self.activo}"

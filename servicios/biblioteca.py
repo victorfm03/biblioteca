@@ -1,13 +1,19 @@
+import json
+from datetime import date
+from pathlib import Path
 from modelos.libro import Libro
 from modelos.usuario import Usuario
 from modelos.prestamo import Prestamo
 
 
 class Biblioteca:
+    RUTA_DATOS = Path("datos")
+
     def __init__(self):
         self.usuarios = []
         self.prestamos = []
         self.libros= []
+        self.cargar_datos()
 
     def registrar_libro(self, libro_nuevo):
         #buscar si hay otro libro con el mismo isbn
@@ -74,3 +80,59 @@ class Biblioteca:
             if usuario.id == id_usuario:
                 return usuario
         return None
+    
+    def mostrar_prestamos_activos(self):
+        encontrado=False
+        for prestamo in self.prestamos:
+            if prestamo.activo:
+                print(prestamo)
+                encontrado=True
+        
+        if not encontrado:
+            print("No hay prestamos activos")
+
+    def prestamo_por_usuario(self, id_usuario):
+        usuario=self.buscar_usuario_por_id(id_usuario)
+        if usuario is None:
+            print("No existe el usuario")
+            return
+        
+        encontrado=False
+
+        for prestamo in self.prestamos:
+            if prestamo.usuario == usuario:
+                print(prestamo)
+                encontrado=True
+                
+        if not encontrado:
+            print("El usuario no tiene prestamos activos")
+
+    def guardar_datos(self):
+        with open(self.RUTA_DATOS / "libros.json", "w", encoding="utf-8") as fichero:
+            json.dump([libro.__dict__ for libro in self.libros], fichero, ensure_ascii=False, indent=4)
+
+        with open(self.RUTA_DATOS / "usuarios.json", "w", encoding="utf-8") as fichero:
+            json.dump([usuario.__dict__ for usuario in self.usuarios], fichero, ensure_ascii=False, indent=4)
+        
+        with open(self.RUTA_DATOS / "prestamos.json", "w", encoding="utf-8") as fichero:
+            json.dump([prestamo.to_dict() for prestamo in self.prestamos], fichero, ensure_ascii=False, indent=4)
+
+    def cargar_datos(self):
+        if (self.RUTA_DATOS / "libros.json").exists():
+            with open(self.RUTA_DATOS / "libros.json", encoding="utf-8") as fichero:
+                self.libros= [Libro(**datos) for datos in json.load(fichero)]
+
+        if (self.RUTA_DATOS / "usuarios.json").exists():
+            with open(self.RUTA_DATOS / "usuarios.json", encoding="utf-8") as fichero:
+                self.usuarios= [Usuario(**datos) for datos in json.load(fichero)]
+
+        if (self.RUTA_DATOS / "prestamos.json").exists():
+            with open(self.RUTA_DATOS / "prestamos.json", encoding="utf-8") as fichero:
+                self.prestamos= [self._prestamo_desde_dict(datos) for datos in json.load(fichero)]
+
+    def _prestamo_desde_dict(self, datos):
+        usuario= Usuario(**datos["usuario"])
+        libro= Libro(**datos["libro"])
+        fecha_prestamo= date.fromisoformat(datos["fecha_prestamo"])
+        fecha_devolucion= date.fromisoformat(datos["fecha_devolucion"]) if datos["fecha_devolucion"] else None
+        return Prestamo(usuario, libro, fecha_prestamo, fecha_devolucion)

@@ -1,0 +1,21 @@
+[
+    {
+        "usuario": {
+            "id": 1,
+            "nombre": "a",
+            "apellidos": "a",
+            "email": "a"
+        },
+        "libro": {
+            "isbn": "1",
+            "titulo": "a",
+            "autor": "a",
+            "anio": "a",
+            "genero": "a",
+            "disponible": false
+        },
+        "fecha_prestamo": "2026-10-15",
+        "activo": true,
+        "fecha_devolucion": null
+    }
+]

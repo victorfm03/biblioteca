@@ -103,6 +103,16 @@ def registrarDevolucion(biblioteca):
     libro.disponible=True
     print(f"Código del libro: {libro.isbn}")
     print("Libro devuelto correctamente.")
+
+def mostrar_prestamos(biblioteca):
+    biblioteca.mostrar_prestamos_activos()
+
+def prestamos_de_usuario(biblioteca):
+    idUsuario=int(input("Di el id de usuario para ver sus prestamos: "))
+    biblioteca.prestamo_por_usuario(idUsuario)
+
+def guardar_datos(biblioteca):
+    biblioteca.guardar_datos()
     
 def main():
 
@@ -124,11 +134,13 @@ def main():
         elif opcion == "6":
             registrarDevolucion(biblioteca)
         elif opcion == "7":
-            pass
+            mostrar_prestamos(biblioteca)
         elif opcion == "8":
-            pass
+            prestamos_de_usuario(biblioteca)
+        elif opcion =="9":
+            guardar_datos(biblioteca)
         elif opcion == "0":
-            pass
+            return
 
 if __name__ == "__main__":
     main()
