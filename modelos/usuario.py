@@ -12,6 +12,13 @@ class Usuario:
         return self.id == value.id
 
     
+    def usuario_a_dict(self, usuario):
+        return {
+            "id":usuario.id,
+            "nombre":usuario.nombre,
+            "apellidos":usuario.apellidos,
+            "email":usuario.email
+        }
     
     
     

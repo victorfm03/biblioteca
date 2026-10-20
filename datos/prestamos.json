@@ -17,5 +17,24 @@
         "fecha_prestamo": "2026-10-15",
         "activo": true,
         "fecha_devolucion": null
+    },
+    {
+        "usuario": {
+            "id": 1,
+            "nombre": "a",
+            "apellidos": "a",
+            "email": "a"
+        },
+        "libro": {
+            "isbn": "2",
+            "titulo": "asdas",
+            "autor": "sddas",
+            "anio": "g",
+            "genero": "2",
+            "disponible": false
+        },
+        "fecha_prestamo": "2026-10-20",
+        "activo": true,
+        "fecha_devolucion": null
     }
 ]

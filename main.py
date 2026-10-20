@@ -3,6 +3,7 @@ from modelos.prestamo import Prestamo
 from modelos.usuario import Usuario
 from servicios.biblioteca import Biblioteca
 from datetime import date
+from servicios.ficheros import guardar_biblioteca, cargar_datos
 
 def menu():
     print()
@@ -118,29 +119,37 @@ def main():
 
     biblioteca = Biblioteca()
 
+    cargar_datos(biblioteca)
+
     while True:
         menu()
         opcion = input("Opcion: ")
-        if opcion == "1":
-            registrar_libro(biblioteca)
-        elif opcion == "2":
-            registrar_usuario(biblioteca)
-        elif opcion == "3":
-            print(buscar_libro(biblioteca))
-        elif opcion == "4":
-            listar_libros(biblioteca)
-        elif opcion == "5":
-            realizar_prestamo(biblioteca)
-        elif opcion == "6":
-            registrarDevolucion(biblioteca)
-        elif opcion == "7":
-            mostrar_prestamos(biblioteca)
-        elif opcion == "8":
-            prestamos_de_usuario(biblioteca)
-        elif opcion =="9":
-            guardar_datos(biblioteca)
-        elif opcion == "0":
-            return
+
+        try:
+            if opcion == "1":
+                registrar_libro(biblioteca)
+            elif opcion == "2":
+                registrar_usuario(biblioteca)
+            elif opcion == "3":
+                print(buscar_libro(biblioteca))
+            elif opcion == "4":
+                listar_libros(biblioteca)
+            elif opcion == "5":
+                realizar_prestamo(biblioteca)
+            elif opcion == "6":
+                registrarDevolucion(biblioteca)
+            elif opcion == "7":
+                mostrar_prestamos(biblioteca)
+            elif opcion == "8":
+                prestamos_de_usuario(biblioteca)
+            elif opcion =="9":
+                guardar_biblioteca(biblioteca)
+                #guardar_datos(biblioteca)
+            elif opcion == "0":
+                return
+
+        except ValueError as error:
+            print(f"Error: {error}")
 
 if __name__ == "__main__":
     main()

@@ -3,8 +3,16 @@
         "isbn": "1",
         "titulo": "a",
         "autor": "a",
-        "anio": "a",
         "genero": "a",
+        "anio": "a",
+        "disponible": false
+    },
+    {
+        "isbn": "2",
+        "titulo": "asdas",
+        "autor": "sddas",
+        "genero": "2",
+        "anio": "g",
         "disponible": false
     }
 ]

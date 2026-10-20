@@ -14,6 +14,17 @@ class Libro:
     def isDisponible(self)-> bool:
         estado = "Disponible" if self.disponible else "Prestado"
         return estado
+
+    def prestar(self):
+        if not self.disponible:
+            raise ValueError("El libro no esta disponible")
+        self.disponible=False
+
+    def devolver(self):
+        if self.disponible:
+            raise ValueError("El libro ya esta disponible")
+
+        self.disponible=True
     
     def __eq__(self,valor):
         return self.isbn ==valor.isbn
